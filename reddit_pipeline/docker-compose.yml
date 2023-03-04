@@ -1,0 +1,37 @@
+#Specify the version of the yml file
+version: '3.0'
+
+# here we specify the services, componing the pipeline
+services:
+    reddit_collector:
+        build: ./reddit_collector/
+        container_name: reddit_collector_continer
+        volumes:
+            - ./reddit_collector:/app
+        depends_on:
+            - mongodb
+
+    mongodb:
+        image: mongo
+        container_name: mongo_container
+        ports:
+            - 27017:27017
+
+    etl_job:
+        build: ./etl/
+        container_name: etl_job
+        volumes:
+            - ./etl:/app
+        depends_on:
+            - postgres
+            - mongodb
+    
+    postgres:
+        image: postgres
+        container_name: postgres_container_name
+        ports:
+            - 5433:5432
+        environment:
+            - POSTGRES_USER=username
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_DB=db_name

@@ -1,0 +1,8 @@
+pandas
+pymongo
+sqlalchemy
+psycopg2-binary
+vaderSentiment
+seaborn
+matplotlib
+slack_cleaner2
